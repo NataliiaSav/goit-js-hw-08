@@ -5,6 +5,7 @@ const STORAGE_KEY = 'feedback-form-state';
 
 formEl.addEventListener('input', throttle(onDataInput, 500));
 formEl.addEventListener('submit', onFormSubmit);
+initForm();
 
 function onDataInput(event) {
   let savedData = localStorage.getItem(STORAGE_KEY);
@@ -17,5 +18,15 @@ function onFormSubmit(event) {
   let { email, message } = formEl.elements;
   console.log({ email: email.value, message: message.value });
   event.preventDefault();
-  localStorage.removeItem(STORAGE_KEY);
+  event.currentTarget.reset();
+}
+function initForm() {
+  let savedData = localStorage.getItem(STORAGE_KEY);
+  if (savedData) {
+    savedData = JSON.parse(savedData);
+    Object.entries(savedData).forEach(([name, value]) => {
+      // console.log(savedData);
+      formEl.elements[name].value = value;
+    });
+  }
 }
