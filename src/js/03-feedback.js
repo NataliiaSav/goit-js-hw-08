@@ -15,9 +15,10 @@ function onDataInput(event) {
 }
 
 function onFormSubmit(event) {
+  event.preventDefault();
   let { email, message } = formEl.elements;
   console.log({ email: email.value, message: message.value });
-  event.preventDefault();
+  localStorage.removeItem(STORAGE_KEY);
   event.currentTarget.reset();
 }
 function initForm() {
